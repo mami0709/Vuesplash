@@ -23,6 +23,11 @@ const actions = {
         const response = await axios.post("/api/login", data);
         context.commit("setUser", response.data);
     },
+    async logout(context) {
+        const response = await axios.post("/api/logout");
+        // ログアウト処理が完了したあとは user ステートを null で更新
+        context.commit("setUser", null);
+    },
 };
 
 export default {
