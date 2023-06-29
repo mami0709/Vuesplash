@@ -101,8 +101,10 @@ export default {
             // authストアのloginアクションを呼び出す
             await this.$store.dispatch("auth/login", this.loginForm);
 
-            // トップページに移動する
-            this.$router.push("/");
+            // apiStatus が成功（true）だった場合のみトップページに移動
+            if (this.apiStatus) {
+                this.$router.push("/");
+            }
         },
         async register() {
             // authストアのresigterアクションを呼び出す
@@ -110,6 +112,11 @@ export default {
 
             // トップページに移動する
             this.$router.push("/");
+        },
+    },
+    computed: {
+        apiStatus() {
+            return this.$store.state.auth.apiStatus;
         },
     },
 };

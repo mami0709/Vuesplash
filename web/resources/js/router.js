@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import PhotoList from "./pages/PhotoList.vue";
 import Login from "./pages/Login.vue";
 import store from "./store";
+import SystemError from "./pages/errors/System.vue";
 
 const routes = [
     {
@@ -28,6 +29,10 @@ const routes = [
                 next();
             }
         },
+    },
+    {
+        path: "/500",
+        component: SystemError,
     },
 ];
 
