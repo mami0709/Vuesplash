@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         // 'login',
+        'api/*',  // APIのルートを全てCSRF保護の対象外にします
         // 他にCSRF保護を無効にしたいパスがあればここに追加
     ];
 }
