@@ -3,7 +3,12 @@ const state = {
     user: null,
 };
 
-const getters = {};
+const getters = {
+    // ログインチェックに使用。確実に真偽値を返すために二重否定
+    check: (state) => !!state.user,
+    // user が null の場合に呼ばれてもエラーが発生しないように空文字を返す
+    username: (state) => (state.user ? state.user.name : ""),
+};
 
 const mutations = {
     // user ステートの値を更新する setUser
