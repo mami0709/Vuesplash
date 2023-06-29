@@ -18,6 +18,11 @@ const actions = {
         const response = await axios.post("/api/register", data);
         context.commit("setUser", response.data);
     },
+    // ログイン API を呼び出す login アクション
+    async login(context, data) {
+        const response = await axios.post("/api/login", data);
+        context.commit("setUser", response.data);
+    },
 };
 
 export default {
