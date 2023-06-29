@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // 'login',
+        // 他にCSRF保護を無効にしたいパスがあればここに追加
     ];
 }

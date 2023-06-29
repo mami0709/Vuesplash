@@ -30,6 +30,7 @@ class LoginApiTest extends TestCase
             'email' => $this->user->email,
             'password' => 'password',
         ]);
+        $response->dump();  // Add this
 
         $response
             ->assertStatus(200)

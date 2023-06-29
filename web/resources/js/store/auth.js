@@ -33,6 +33,11 @@ const actions = {
         // ログアウト処理が完了したあとは user ステートを null で更新
         context.commit("setUser", null);
     },
+    async currentUser(context) {
+        const response = await axios.get("/api/user");
+        const user = response.data || null;
+        context.commit("setUser", user);
+    },
 };
 
 export default {
