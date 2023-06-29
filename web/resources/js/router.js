@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PhotoList from "./pages/PhotoList.vue";
 import Login from "./pages/Login.vue";
+import store from "./store";
 
 const routes = [
     {
@@ -15,6 +16,18 @@ const routes = [
     {
         path: "/:catchAll(.*)",
         component: PhotoList,
+    },
+    {
+        // ログインしていればトップページに切り替え、ログインしていなければそのままログインページを表示
+        path: "/login",
+        component: Login,
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/check"]) {
+                next("/");
+            } else {
+                next();
+            }
+        },
     },
 ];
 
