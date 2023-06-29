@@ -1,4 +1,4 @@
-import { OK, UNPROCESSABLE_ENTITY } from "../util";
+import { OK, CREATED, UNPROCESSABLE_ENTITY } from "../util";
 
 const state = {
     // ログイン済みユーザーを保持する user を追加
@@ -6,6 +6,7 @@ const state = {
     // API 呼び出しが成功したか失敗したかを表す apiStatus
     apiStatus: null,
     loginErrorMessages: null,
+    registerErrorMessages: null,
 };
 
 const getters = {
@@ -26,20 +27,35 @@ const mutations = {
     setLoginErrorMessages(state, messages) {
         state.loginErrorMessages = messages;
     },
+    setRegisterErrorMessages(state, messages) {
+        state.registerErrorMessages = messages;
+    },
 };
 
 const actions = {
     // 会員登録 API を呼び出す register アクション
     async register(context, data) {
+        context.commit("setApiStatus", null);
         const response = await axios.post("/api/register", data);
-        context.commit("setUser", response.data);
+
+        if (response.status === CREATED) {
+            context.commit("setApiStatus", true);
+            context.commit("setUser", response.data);
+            return false;
+        }
+
+        context.commit("setApiStatus", false);
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            context.commit("setRegisterErrorMessages", response.data.errors);
+        } else {
+            context.commit("error/setCode", response.status, { root: true });
+        }
     },
+
     // ログイン API を呼び出す login アクション
     async login(context, data) {
         context.commit("setApiStatus", null);
-        const response = await axios
-            .post("/api/login", data)
-            .catch((err) => err.response || err);
+        const response = await axios.post("/api/login", data);
 
         if (response.status === OK) {
             context.commit("setApiStatus", true);
@@ -55,15 +71,37 @@ const actions = {
             context.commit("error/setCode", response.status, { root: true });
         }
     },
+
+    // ログアウト
     async logout(context) {
-        const response = await axios.post("/api/logout");
         // ログアウト処理が完了したあとは user ステートを null で更新
-        context.commit("setUser", null);
+        context.commit("setApiStatus", null);
+        const response = await axios.post("/api/logout");
+
+        if (response.status === OK) {
+            context.commit("setApiStatus", true);
+            context.commit("setUser", null);
+            return false;
+        }
+
+        context.commit("setApiStatus", false);
+        context.commit("error/setCode", response.status, { root: true });
     },
+
+    // ログインユーザーチェック
     async currentUser(context) {
+        context.commit("setApiStatus", null);
         const response = await axios.get("/api/user");
         const user = response.data || null;
-        context.commit("setUser", user);
+
+        if (response.status === OK) {
+            context.commit("setApiStatus", true);
+            context.commit("setUser", user);
+            return false;
+        }
+
+        context.commit("setApiStatus", false);
+        context.commit("error/setCode", response.status, { root: true });
     },
 };
 
