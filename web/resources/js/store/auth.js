@@ -1,10 +1,11 @@
-import { OK } from "../util";
+import { OK, UNPROCESSABLE_ENTITY } from "../util";
 
 const state = {
     // ログイン済みユーザーを保持する user を追加
     user: null,
     // API 呼び出しが成功したか失敗したかを表す apiStatus
     apiStatus: null,
+    loginErrorMessages: null,
 };
 
 const getters = {
@@ -21,6 +22,9 @@ const mutations = {
     },
     setApiStatus(state, status) {
         state.apiStatus = status;
+    },
+    setLoginErrorMessages(state, messages) {
+        state.loginErrorMessages = messages;
     },
 };
 
@@ -43,8 +47,13 @@ const actions = {
             return false;
         }
 
+        // ステータスコードが UNPROCESSABLE_ENTITY の場合
         context.commit("setApiStatus", false);
-        context.commit("error/setCode", response.status, { root: true });
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            context.commit("setLoginErrorMessages", response.data.errors);
+        } else {
+            context.commit("error/setCode", response.status, { root: true });
+        }
     },
     async logout(context) {
         const response = await axios.post("/api/logout");
