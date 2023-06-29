@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,7 +25,7 @@ class RegisterApiTest extends TestCase
 
         $response = $this->json('POST', route('register'), $data);
 
-        $user = \Illuminate\Foundation\Auth\User::first();
+        $user = User::first();
         $response->dump(); //ログ出力
         $this->assertEquals($data['name'], $user->name);
 
