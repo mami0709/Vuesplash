@@ -3,6 +3,7 @@ import PhotoList from "./pages/PhotoList.vue";
 import Login from "./pages/Login.vue";
 import store from "./store";
 import SystemError from "./pages/errors/System.vue";
+import PhotoDetail from "./pages/PhotoDetail.vue";
 
 const routes = [
     {
@@ -33,6 +34,11 @@ const routes = [
     {
         path: "/500",
         component: SystemError,
+    },
+    {
+        path: "/photos/:id",
+        component: PhotoDetail,
+        props: true,
     },
 ];
 
