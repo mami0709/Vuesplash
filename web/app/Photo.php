@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Photo extends Model
 {
+    use HasFactory;
     /** プライマリキーの型 */
     protected $keyType = 'string';
 

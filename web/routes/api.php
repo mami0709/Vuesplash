@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\PhotoController; // PhotoControllerをインポート
+use App\Http\Controllers\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +26,6 @@ Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logo
 Route::get('/user', fn () => Auth::user())->name('user');
 // 写真投稿
 Route::post('/photos', [PhotoController::class, 'create'])->name('photo.create');
+// 写真一覧
+Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
+
