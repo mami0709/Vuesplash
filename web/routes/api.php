@@ -28,4 +28,5 @@ Route::get('/user', fn () => Auth::user())->name('user');
 Route::post('/photos', [PhotoController::class, 'create'])->name('photo.create');
 // 写真一覧
 Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
-
+// 写真詳細
+Route::get('/photos/{id}', [PhotoController::class, 'show'])->name('photo.show');
