@@ -26,6 +26,9 @@ class Photo extends Model
         'url', 'likes_count', 'liked_by_user',
     ];
 
+    // 1ページあたりの項目数
+    protected $perPage = 6;
+
     /** IDの桁数 */
     const ID_LENGTH = 12;
 

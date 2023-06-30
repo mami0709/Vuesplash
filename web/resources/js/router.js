@@ -9,10 +9,10 @@ const routes = [
     {
         path: "/",
         component: PhotoList,
-    },
-    {
-        path: "/login",
-        component: Login,
+        props: (route) => {
+            const page = route.query.page;
+            return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 };
+        },
     },
     // Laravel側が存在しないパスを入力するとPhotoListに飛ぶ仕様なので念のため統一
     {
