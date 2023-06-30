@@ -106,7 +106,7 @@ class Photo extends Model
      */
     public function owner()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id', 'users');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id', 'users');
     }
 
     /**
@@ -124,6 +124,6 @@ class Photo extends Model
      */
     public function likes()
     {
-        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
+        return $this->belongsToMany('App\Models\User', 'likes')->withTimestamps();
     }
 }

@@ -50,7 +50,7 @@ class PhotoSubmitApiTest extends TestCase
         $photo = Photo::first();
 
         // 写真のIDが12桁のランダムな文字列であること
-        $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/', $photo->id);
+        $this->assertMatchesRegularExpression('/^[0-9a-zA-Z-_]{12}$/', $photo->id);
 
         // DBに挿入されたファイル名のファイルがストレージに保存されていること
         Storage::cloud()->assertExists($photo->filename);
@@ -61,8 +61,10 @@ class PhotoSubmitApiTest extends TestCase
      */
     public function should_データベースエラーの場合はファイルを保存しない()
     {
-        // DBファサードをモックして、"insert"メソッドが呼ばれたときに例外をスローするようにする
-        \Illuminate\Support\Facades\DB::shouldReceive('insert')
+        // Photo モデルをモックし、"save"メソッドが呼ばれたときに例外をスローするようにする
+        $mockPhoto = \Mockery::mock('overload:\App\Models\Photo');
+        $mockPhoto->shouldReceive('save')
+            // \Illuminate\Support\Facades\DB::shouldReceive('insert')
             ->andThrow(new Exception('DB exception'));
 
         Storage::fake('s3');
