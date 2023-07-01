@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Comment;
 use App\Photo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -30,5 +31,11 @@ class PhotoFactory extends Factory
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
+    }
+    public function configure()
+    {
+        return $this->afterCreating(function (Photo $photo) {
+            $photo->comments()->saveMany(Comment::factory()->count(3)->make());
+        });
     }
 }

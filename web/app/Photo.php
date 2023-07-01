@@ -18,7 +18,7 @@ class Photo extends Model
     /** JSONに含める属性 */
     protected $visible = [
         'id', 'owner', 'url', 'comments',
-        'likes_count', 'liked_by_user',
+        // 'likes_count', 'liked_by_user',
     ];
 
     /** JSONに含める属性 */
@@ -121,7 +121,7 @@ class Photo extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\Comment')->orderBy('id', 'desc');
+        return $this->hasMany('App\Models\Comment')->orderBy('id', 'desc');
     }
 
     /**
