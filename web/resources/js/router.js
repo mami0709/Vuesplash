@@ -4,6 +4,7 @@ import Login from "./pages/Login.vue";
 import store from "./store";
 import SystemError from "./pages/errors/System.vue";
 import PhotoDetail from "./pages/PhotoDetail.vue";
+import NotFound from "./pages/errors/NotFound.vue";
 
 const routes = [
     {
@@ -14,10 +15,9 @@ const routes = [
             return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 };
         },
     },
-    // Laravel側が存在しないパスを入力するとPhotoListに飛ぶ仕様なので念のため統一
     {
         path: "/:catchAll(.*)",
-        component: PhotoList,
+        component: NotFound,
     },
     {
         // ログインしていればトップページに切り替え、ログインしていなければそのままログインページを表示
