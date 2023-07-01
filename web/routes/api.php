@@ -32,3 +32,7 @@ Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
 Route::get('/photos/{id}', [PhotoController::class, 'show'])->name('photo.show');
 // コメント
 Route::post('/photos/{photo}/comments', [PhotoController::class, 'addComment'])->name('photo.comment');
+// いいね
+Route::put('/photos/{id}/like', [PhotoController::class, 'like'])->name('photo.like');
+// いいね解除
+Route::delete('/photos/{id}/like', [PhotoController::class, 'unlike']);

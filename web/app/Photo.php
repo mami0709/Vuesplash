@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 class Photo extends Model
 {
     use HasFactory;
@@ -18,7 +17,7 @@ class Photo extends Model
     /** JSONに含める属性 */
     protected $visible = [
         'id', 'owner', 'url', 'comments',
-        // 'likes_count', 'liked_by_user',
+        'likes_count', 'liked_by_user',
     ];
 
     /** JSONに含める属性 */
