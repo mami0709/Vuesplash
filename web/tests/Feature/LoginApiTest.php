@@ -15,6 +15,7 @@ class LoginApiTest extends TestCase
 
     public function setUp(): void
     {
+        // テストケースが実行される前に行う準備を行うメソッドで、ここではテストユーザーをデータベースに作成
         parent::setUp();
 
         // テストユーザー作成
@@ -26,12 +27,14 @@ class LoginApiTest extends TestCase
      */
     public function should_登録済みのユーザーを認証して返却する()
     {
+        // login ルートに対して POST リクエストを送信
         $response = $this->json('POST', route('login'), [
             'email' => $this->user->email,
             'password' => 'password',
         ]);
-        $response->dump();  // Add this
+        $response->dump();
 
+        //  HTTP200であることと、レスポンスのJSONにテストユーザーの名前が含まれていることを確認
         $response
             ->assertStatus(200)
             ->assertJson(['name' => $this->user->name]);
